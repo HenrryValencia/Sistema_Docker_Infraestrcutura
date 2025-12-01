@@ -1,0 +1,26 @@
+version: '3.8'
+services:
+  mysql-node:
+    image: mysql:8.0
+    container_name: importaciones_db_node2
+    restart: unless-stopped
+    user: root
+    environment:
+      MYSQL_ROOT_PASSWORD: "PasswordSeguro123"
+      MYSQL_DATABASE: "Importaciones_Animales_Valencia"
+    ports:
+      - "3306:3306"
+      - "33061:33061"
+      - "33061:33061/udp"
+    volumes:
+      - mysql-data:/var/lib/mysql
+      - ./conf/mysqld.node2.cnf:/etc/mysql/conf.d/mysqld.cnf:ro
+      - ./init:/docker-entrypoint-initdb.d:ro
+    entrypoint: ["sh", "-c", "chown -R mysql:mysql /var/lib/mysql && exec /usr/local/bin/docker-entrypoint.sh mysqld"]
+
+volumes:
+  mysql-data:
+
+# NOTE: On Windows Docker Desktop, host networking is limited. Ensure ZeroTier is running on the
+# host and that the container can reach the ZeroTier IP of the other nodes. If necessary, run
+# ZeroTier inside the container (advanced) or run MySQL on the host.

@@ -1,0 +1,22 @@
+version: '3.8'
+services:
+  mysql-node:
+    image: mysql:8.0
+    container_name: importaciones_db_node3
+    restart: unless-stopped
+    user: root
+    network_mode: host
+    environment:
+      MYSQL_ROOT_PASSWORD: "PasswordSeguro123"
+      MYSQL_DATABASE: "Importaciones_Animales_Valencia"
+    volumes:
+      - mysql-data:/var/lib/mysql
+      - ./conf/mysqld.node3.cnf:/etc/mysql/conf.d/mysqld.cnf:ro
+      - ./init:/docker-entrypoint-initdb.d:ro
+    entrypoint: ["sh", "-c", "chown -R mysql:mysql /var/lib/mysql && exec /usr/local/bin/docker-entrypoint.sh mysqld"]
+
+volumes:
+  mysql-data:
+
+# NOTE: On Linux (Ubuntu) using `network_mode: host` allows the container to bind the ZeroTier
+# IP assigned to the host. Make sure ZeroTier is installed and joined to the same network.

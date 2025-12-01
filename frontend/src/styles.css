@@ -1,0 +1,85 @@
+/* Estilos principales: variables, layout y animaciones.
+   Comentarios en español y explicaciones claras. */
+:root{
+  --bg: #0f1724; /* fondo oscuro elegante */
+  --card: #0b1220;
+  --muted: #9aa6b2;
+  --accent: #0ea5a4;
+  --glass: rgba(255,255,255,0.04);
+}
+
+*{box-sizing:border-box}
+html,body,#root{height:100%}
+body{
+  margin:0;
+  font-family: Inter, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial;
+  background: linear-gradient(180deg,#071025 0%, #071827 60%);
+  color:#e6eef3;
+  -webkit-font-smoothing:antialiased;
+}
+
+/* Barra superior: simple y centrada */
+.nav{
+  position:sticky;top:0;z-index:40;background:linear-gradient(180deg, rgba(11,18,32,0.6), transparent);
+  backdrop-filter: blur(6px);
+}
+.nav-inner{max-width:1100px;margin:0 auto;padding:14px 20px;display:flex;align-items:center;justify-content:space-between}
+.brand{font-weight:700;letter-spacing:0.6px}
+.menu a{color:var(--muted);margin-left:18px;text-decoration:none;transition:color .18s}
+.menu a:hover{color:var(--accent)}
+
+/* Hero principal: texto a la izquierda, visual a la derecha */
+.hero{display:flex;align-items:center;justify-content:space-between;max-width:1200px;margin:36px auto;padding:28px 20px}
+.hero-inner{max-width:620px}
+.hero h1{font-size:48px;margin:0 0 12px;line-height:1.02}
+.lead{color:var(--muted);margin:0 0 18px}
+.cta-row{display:flex;gap:12px}
+.btn{display:inline-flex;align-items:center;gap:10px;padding:10px 16px;border-radius:10px;border:0;cursor:pointer;transition:transform .12s ease,box-shadow .12s}
+.btn.primary{background:linear-gradient(90deg,var(--accent),#06b6b4);color:#042027;font-weight:600}
+.btn.primary:hover{transform:translateY(-3px);box-shadow:0 8px 30px rgba(14,165,164,0.12)}
+.btn.ghost{background:transparent;border:1px solid rgba(255,255,255,0.06);color:var(--muted)}
+.btn.small{padding:6px 10px;border-radius:8px}
+
+.hero-visual{width:360px;display:flex;justify-content:center}
+.card.large{width:320px;height:220px;border-radius:18px;background:linear-gradient(180deg, rgba(255,255,255,0.03), rgba(255,255,255,0.01));box-shadow:0 10px 50px rgba(2,6,23,0.6);transform:translateY(0);transition:transform .6s cubic-bezier(.2,.9,.2,1)}
+.card.large:hover{transform:translateY(-10px)}
+.card-inner{padding:28px}
+.card .price{font-size:20px;font-weight:700;color:var(--accent)}
+.card .product{margin-top:8px;color:#dff7f6}
+
+/* Grid de productos */
+.showcase{max-width:1100px;margin:28px auto;padding:24px 20px}
+.showcase h2{font-size:28px;margin-bottom:18px}
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+.product-card{background:linear-gradient(180deg,var(--card), rgba(255,255,255,0.02));padding:18px;border-radius:14px;transition:transform .18s,box-shadow .18s;cursor:pointer}
+.product-card:hover{transform:translateY(-8px);box-shadow:0 18px 40px rgba(2,6,23,0.6)}
+.thumb{height:120px;border-radius:10px;background-size:cover;background-position:center;margin-bottom:12px}
+.thumb-dog{background:linear-gradient(135deg,#f6d365,#fda085)}
+.thumb-cat{background:linear-gradient(135deg,#c9ffbf,#ffafbd)}
+.thumb-feed{background:linear-gradient(135deg,#a1c4fd,#c2e9fb)}
+.muted{color:var(--muted);font-size:14px}
+.price-row{display:flex;justify-content:space-between;align-items:center;margin-top:12px}
+.price{font-weight:700}
+
+/* Sección ventas: tarjeta con fondo translúcido */
+.ventas-panel{max-width:900px;background:var(--glass);padding:18px;border-radius:12px;margin:10px 0}
+
+/* Footer */
+.site-footer{margin-top:36px;padding:28px 20px}
+.footer-inner{max-width:1100px;margin:0 auto;display:flex;justify-content:space-between;color:var(--muted)}
+
+/* Animaciones sutiles */
+@keyframes fadeInUp{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.site-root, .hero, .showcase, .ventas-section{animation:fadeInUp .6s both}
+
+/* Responsive */
+@media (max-width:900px){
+  .grid{grid-template-columns:repeat(2,1fr)}
+  .hero{flex-direction:column-reverse;align-items:flex-start}
+  .hero-visual{width:100%;display:flex;justify-content:flex-start;margin-bottom:18px}
+}
+@media (max-width:560px){
+  .grid{grid-template-columns:1fr}
+  .hero h1{font-size:28px}
+  .nav-inner{padding:12px}
+}

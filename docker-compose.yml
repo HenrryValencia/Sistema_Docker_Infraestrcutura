@@ -1,0 +1,29 @@
+
+services:
+  mysql-node:
+    image: mysql:8.0
+    container_name: importaciones_db
+    restart: unless-stopped
+    # Running as root so we can fix permissions inside container for bind/volume mounts
+    user: root
+    environment:
+      MYSQL_ROOT_PASSWORD: "PasswordSeguro123"
+      MYSQL_DATABASE: "Importaciones_Animales_Valencia"
+
+    ports:
+      - "${HOST_SQL_PORT:-3306}:3306"    # Use HOST_SQL_PORT env to change host port per node (macOS set 3307)
+      - "33061:33061"
+      - "33061:33061/udp"
+    volumes:
+      - mysql-data:/var/lib/mysql
+      - ./conf/mysqld.cnf:/etc/mysql/conf.d/mysqld.cnf:ro
+      - ./init:/docker-entrypoint-initdb.d:ro
+    # Ensure mysql user owns data dir, then call the official entrypoint so initialization runs
+    entrypoint: ["sh", "-c", "chown -R mysql:mysql /var/lib/mysql && exec /usr/local/bin/docker-entrypoint.sh mysqld"]
+    healthcheck:
+      test: ["CMD", "mysqladmin" ,"ping", "-h", "localhost"]
+      timeout: 20s
+      retries: 10
+
+volumes:
+  mysql-data:
